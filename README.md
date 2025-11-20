@@ -1,40 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+🔗 TinyLink — Modern URL Shortener (Next.js + Tailwind + PostgreSQL/Neon)
 
-## Getting Started
+TinyLink is a modern, production-ready URL shortener built with Next.js, Tailwind CSS, and a PostgreSQL (Neon) database.
 
-First, run the development server:
+It supports creating short links, deleting them, redirecting users, and viewing stats — all inside a clean dashboard.
 
-```bash
+✨ Features
+
+🚀 Next.js Pages Router
+
+🎨 Tailwind CSS UI
+
+🗄️ PostgreSQL (Neon)
+
+🔗 Create short URLs
+
+🧹 Delete URLs
+
+📊 Track clicks & last clicked
+
+🔀 Auto redirect /abc123
+
+📈 Stats page /code/:code
+
+
+Project Structure
+tinylink/
+├─ package.json
+├─ next.config.js
+├─ tailwind.config.js
+├─ postcss.config.js
+├─ tailwind.css
+├─ .env.example
+├─ migrations/
+│  └─ 001_create_links.sql
+├─ lib/
+│  ├─ db.js
+│  └─ validation.js
+├─ pages/
+│  ├─ _app.js
+│  ├─ index.js
+│  ├─ healthz.js
+│  ├─ [code].js
+│  ├─ code/
+│  │  └─ [code].js
+│  └─ api/
+│     ├─ links/
+│     │  ├─ index.js
+│     │  └─ [code].js
+│     └─ _healthz.js
+├─ components/
+│  ├─ AddLinkForm.js
+│  ├─ LinksTable.js
+│  └─ Layout.js
+├─ styles/
+│  └─ globals.css
+
+
+🛠️ Tech Stack
+Tool          	Purpose
+Next.js	        Fullstack app + APIs
+Tailwind CSS    UI styling
+PostgreSQL    	Database
+Neon.tech     	Serverless PostgreSQL
+SWR	            Client-side data fetching
+
+
+Installation
+1️⃣ Clone the repo
+git clone https://github.com/your-username/tinylink.git
+cd tinylink
+
+2️⃣ Install dependencies
+npm install
+
+3️⃣ Create .env
+cp .env.example .env
+
+4️⃣ Add your Neon PostgreSQL connection string
+
+Get this from neon.tech → Project → Connection String:
+
+DATABASE_URL=postgres://user:password@host:5432/dbname
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+
+🗄️ Database Setup (PostgreSQL)
+
+Run this in your Neon SQL editor:
+
+CREATE TABLE IF NOT EXISTS links (
+  id SERIAL PRIMARY KEY,
+  code VARCHAR(20) UNIQUE NOT NULL,
+  target TEXT NOT NULL,
+  clicks INTEGER DEFAULT 0,
+  last_clicked TIMESTAMP,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+▶️ Start Development Server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+🚀API Endpoints
+Method    	Endpoint          	Description
+GET       	/api/links         	Fetch all links
+POST      	/api/links	        Create new short link
+GET       	/api/links/:code	  Fetch one link
+DELETE	    /api/links/:code	  Delete link
+GET	        /:code	            Public redirect
+GET	        /code/:code       	Stats page
+GET	        /healthz	          Health check
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+🚀 Deployment (Vercel + Neon)
+Step 1 — Push to GitHub
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/your-username/tinylink.git
+git push -u origin main
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+Step 2 — Deploy on Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Import GitHub repo
 
-## Learn More
+Add environment variables:
 
-To learn more about Next.js, take a look at the following resources:
+DATABASE_URL=postgres://...
+NEXT_PUBLIC_BASE_URL=https://your-project.vercel.app
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+Step 3 — Done 🎉
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+Your URL shortener is live.
