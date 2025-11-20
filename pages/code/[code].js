@@ -1,6 +1,6 @@
 // pages/code/[code].js
 import { query } from '../../lib/db';
-import Layout from '../../../components/Layout';
+import Layout from '../../components/Layout';
 
 export async function getServerSideProps({ params }) {
   const code = params.code;
