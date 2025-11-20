@@ -1,5 +1,5 @@
 // pages/code/[code].js
-import { query } from '../../../lib/db';
+import { query } from '../../lib/db';
 import Layout from '../../../components/Layout';
 
 export async function getServerSideProps({ params }) {
